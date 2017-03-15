@@ -2,65 +2,52 @@
 layout: default
 ---
 <div class="home">
-    <section class="site-header">
-        <h1 class="smallcap"><a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
-        </h1>
-        <p>Keep study Keey dream. 记录想法与技术的地方.</p>
+  <section class="site-header">
+    <h1 class="smallcap"><a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
+    </h1>
+    <p>Keep study, Keey dream. 记录想法与技术的地方.</p>
+  </section>
 
-    </section>
-    <section class="post-list-contaienr">
-        <ul class="post-list">
-            {% for post in site.posts %}
-            <li>
-                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d,
-                    %Y" }}
-                </time>
-            </li>
-            {% endfor %}
-        </ul>
-    </section>
+  {% assign rawcategories = "" %}
+  {% for post in site.posts %}
+  {% assign tcategories = post.categories | join:'|' | append:'|' %}
+  {% assign rawcategories = rawcategories | append:tcategories %}
+  {% endfor %}
+  {% assign rawcategories = rawcategories | split:'|' | sort %}
 
-    <!-- new -->
-    {% assign rawcategories = "" %}
-    {% for post in site.posts %}
-    {% assign tcategories = post.categories | join:'|' | append:'|' %}
-    {% assign rawcategories = rawcategories | append:tcategories %}
+  {% assign categories = "" %}
+  {% for tag in rawcategories %}
+  {% if tag != "" %}
+  {% if categories == "" %}
+  {% assign categories = tag | split:'|' %}
+  {% endif %}
+  {% unless categories contains tag %}
+  {% assign categories = categories | join:'|' | append:'|' | append:tag | split:'|' %}
+  {% endunless %}
+  {% endif %}
+  {% endfor %}
+
+  <section class="post-list-contaienr">
+    {% for category in categories %}
+    <h3 class="tag-title" id="{{ tag | slugify }}">{{ category }}</h3>
+    <ul class="post-list">
+      {% for post in site.posts %}
+      {% if post.categories contains category %}
+      <li>
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d
+          %Y"}}
+        </time>
+        &raquo;
+        <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
     {% endfor %}
-    {% assign rawcategories = rawcategories | split:'|' | sort %}
+  </section>
 
-    {% assign categories = "" %}
-    {% for tag in rawcategories %}
-    {% if tag != "" %}
-    {% if categories == "" %}
-    {% assign categories = tag | split:'|' %}
-    {% endif %}
-    {% unless categories contains tag %}
-    {% assign categories = categories | join:'|' | append:'|' | append:tag | split:'|' %}
-    {% endunless %}
-    {% endif %}
-    {% endfor %}
-
-    <section class="post-list-contaienr">
-        {% for category in categories %}
-        <h3 class="tag-title" id="{{ tag | slugify }}">{{ category }}</h3>
-        <ul class="post-list">
-            {% for post in site.posts %}
-            {% if post.categories contains category %}
-            <li>
-                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d,
-                    %Y >>"}}
-                </time>
-                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-            </li>
-            {% endif %}
-            {% endfor %}
-        </ul>
-        {% endfor %}
-    </section>
-
-    <div>
-        <p>ithub:<a href="https://github.com/TangXiaoLv">https://github.com/TangXiaoLv</a></p>
-        <p>email:imbatang@gmail.com | imbatang@126.com</p>
-    </div>
+  <div class="home-bottom">
+    <span><a href="https://github.com/TangXiaoLv">Github</a></span>
+    <span>email:imbatang@gmail.com | imbatang@126.com</span>
+  </div>
 </div>
