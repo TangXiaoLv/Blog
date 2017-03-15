@@ -34,8 +34,7 @@ layout: default
       {% for post in site.posts %}
       {% if post.categories contains category %}
       <li>
-        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d
-          %Y"}}
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y %b %d"}}
         </time>
         &raquo;
         <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
@@ -46,8 +45,19 @@ layout: default
     {% endfor %}
   </section>
 
-  <div class="home-bottom">
-    <span><a href="https://github.com/TangXiaoLv">Github</a></span>
-    <span>email:imbatang@gmail.com | imbatang@126.com</span>
+  <div class="footer">
+    <div class="contact">
+      <p>
+        {{ site.title }}
+        imbatang@gmail.com | imbatang@126.com
+      </p>
+    </div>
+
+    <div class="contact">
+      <p>
+        <a href="https://github.com/TangXiaoLv/">github.com/Blog</a><br/>
+      </p>
+    </div>
   </div>
+
 </div>
