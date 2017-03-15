@@ -4,7 +4,9 @@ layout: default
 <div class="home">
 	<section class="site-header">
 		<h1 class="smallcap"><a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
-		<p>Hello, this is TextLog, another minimalist Jekyll theme by <a href="http://heiswayi.github.io">Heiswayi Nrird</a>. TextLog is a distraction-free and content-focused theme. Please have a look! Oh, don't forget to edit this section in <code>index.html</code>, maybe briefly introduce something about yourself here...</p>
+		<p><b>Keep study Keey dream.</b> 记录想法与技术的地方.</p>
+		<p>Github:<a href="https://github.com/TangXiaoLv">https://github.com/TangXiaoLv</a></p>
+		<p>Email:imbatang@gmail.com | imbatang@126.com</p>
 	</section>
 	<section>
 		<ul class="post-list">
@@ -15,4 +17,22 @@ layout: default
 			{% endfor %}
 		</ul>
 	</section>
+	<section>
+	{% for category in site.categories %}
+  {% assign c = category | first %}
+  {% assign posts = category | last %}
+
+<div id="category-{{ c | replace: ' ', '_' }}">{{ c }}</div>
+<ul>
+{% for post in posts %}
+  {% if post.categories contains c %}
+  <li>
+    <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    <span class="date">{{ post.date | date: "%B %-d, %Y"  }}</span>
+  </li>
+  {% endif %}
+{% endfor %}
+</ul>
+{% endfor %}
+</section>
 </div>
