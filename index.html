@@ -48,10 +48,10 @@ layout: default
             {% for post in site.posts %}
             {% if post.categories contains category %}
             <li>
-                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
                 <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d,
-                    %Y" }}
+                    %Y" >> }}
                 </time>
+                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
             </li>
             {% endif %}
             {% endfor %}
@@ -72,11 +72,6 @@ layout: default
             <li>
                 <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
                 <span class="date">{{ post.date | date: "%B %-d, %Y"  }}</span>
-
-                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d,
-                    %Y" }}
-                </time>
             </li>
             {% endif %}
             {% endfor %}
@@ -85,7 +80,7 @@ layout: default
     </section>
 
     <div>
-        <p>Github:<a href="https://github.com/TangXiaoLv">https://github.com/TangXiaoLv</a></p>
-        <p>Email:imbatang@gmail.com | imbatang@126.com</p>
+        <p>ithub:<a href="https://github.com/TangXiaoLv">https://github.com/TangXiaoLv</a></p>
+        <p>email:imbatang@gmail.com | imbatang@126.com</p>
     </div>
 </div>
