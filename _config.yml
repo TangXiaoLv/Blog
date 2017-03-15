@@ -2,6 +2,7 @@
 title: TangXiaoLv
 baseurl: /Blog
 url: ''
+email: ''
 kramdown:
   input: GFM
 permalink: pretty
