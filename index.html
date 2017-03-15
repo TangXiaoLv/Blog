@@ -2,38 +2,85 @@
 layout: default
 ---
 <div class="home">
-	<section class="site-header">
-		<h1 class="smallcap"><a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
-		<p><b>Keep study Keey dream.</b> 记录想法与技术的地方.</p>
-		<p>Github:<a href="https://github.com/TangXiaoLv">https://github.com/TangXiaoLv</a></p>
-		<p>Email:imbatang@gmail.com | imbatang@126.com</p>
-	</section>
-	<section>
-		<ul class="post-list">
-			{% for post in site.posts %}
-			<li>
-				<a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a> <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time>
-			</li>
-			{% endfor %}
-		</ul>
-	</section>
+    <section class="site-header">
+        <h1 class="smallcap"><a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
+        </h1>
+        <p><b>Keep study Keey dream.</b> 记录想法与技术的地方.</p>
 
-<section>
-		{% for category in site.categories %}
-			{% assign t = category | first %}
-			{% assign posts = category | last %}
+    </section>
+    <section>
+        <ul class="post-list">
+            {% for post in site.posts %}
+            <li>
+                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d,
+                    %Y" }}
+                </time>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
 
-		<div id="category-{{ t | replace: ' ', '_' }}">{{ t }}</div>
-		<ul>
-		{% for post in posts %}
-			{% if post.categories contains t %}
-			<li>
-				<a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-				<span class="date">{{ post.date | date: "%B %-d, %Y"  }}</span>
-			</li>
-			{% endif %}
-		{% endfor %}
-		</ul>
-		{% endfor %}
-</section>
+    <!-- old -->
+    <section>
+        {% for category in site.categories %}
+        {% assign c = category | first %}
+        {% assign posts = category | last %}
+
+        <div id="category-{{ c | replace: ' ', '_' }}">{{ c }}</div>
+        <ul>
+            {% for post in posts %}
+            {% if post.categories contains c %}
+            <li>
+                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                <span class="date">{{ post.date | date: "%B %-d, %Y"  }}</span>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </section>
+
+    <!-- new -->
+    {% assign rawcategories = "" %}
+    {% for post in site.posts %}
+    {% assign tcategories = post.categories | join:'|' | append:'|' %}
+    {% assign rawcategories = rawcategories | append:tcategories %}
+    {% endfor %}
+    {% assign rawcategories = rawcategories | split:'|' | sort %}
+
+    {% assign categories = "" %}
+    {% for tag in rawcategories %}
+    {% if tag != "" %}
+    {% if categories == "" %}
+    {% assign categories = tag | split:'|' %}
+    {% endif %}
+    {% unless categories contains tag %}
+    {% assign categories = categories | join:'|' | append:'|' | append:tag | split:'|' %}
+    {% endunless %}
+    {% endif %}
+    {% endfor %}
+
+    <section>
+        {% for category in categories %}
+        <h3 class="category" id="{{ category | slugify }}"># {{ category }}</h3>
+        <ul class="post-list">
+            {% for post in site.posts %}
+            {% if post.categories contains category %}
+            <li>
+                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d,
+                    %Y" }}
+                </time>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </section>
+
+    <div>
+        <p>Github:<a href="https://github.com/TangXiaoLv">https://github.com/TangXiaoLv</a></p>
+        <p>Email:imbatang@gmail.com | imbatang@126.com</p>
+    </div>
 </div>
