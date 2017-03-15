@@ -21,26 +21,6 @@ layout: default
         </ul>
     </section>
 
-    <!-- old -->
-    <section>
-        {% for category in site.categories %}
-        {% assign c = category | first %}
-        {% assign posts = category | last %}
-
-        <div id="category-{{ c | replace: ' ', '_' }}">{{ c }}</div>
-        <ul>
-            {% for post in posts %}
-            {% if post.categories contains c %}
-            <li>
-                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-                <span class="date">{{ post.date | date: "%M-%-d, %Y"  }}</span>
-            </li>
-            {% endif %}
-            {% endfor %}
-        </ul>
-        {% endfor %}
-    </section>
-
     <!-- new -->
     {% assign rawcategories = "" %}
     {% for post in site.posts %}
@@ -68,6 +48,31 @@ layout: default
             {% for post in site.posts %}
             {% if post.categories contains category %}
             <li>
+                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d,
+                    %Y" }}
+                </time>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </section>
+
+    <!-- old -->
+    <section>
+        {% for category in site.categories %}
+        {% assign c = category | first %}
+        {% assign posts = category | last %}
+
+        <div id="category-{{ c | replace: ' ', '_' }}">{{ c }}</div>
+        <ul class="post-list">
+            {% for post in posts %}
+            {% if post.categories contains c %}
+            <li>
+                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                <span class="date">{{ post.date | date: "%B %-d, %Y"  }}</span>
+
                 <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
                 <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d,
                     %Y" }}
